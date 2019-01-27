@@ -1,0 +1,16 @@
+env:
+  matrix:
+    secure: tywxySPBidA4MISjXAbD+gtQmvAKIMxdlHWEpNpcnjBD0z+KwHl3rapjOgTnbSVpLD/Tbd468NjvhHeM/DDafnqhWNriKM1TuWE//gqq5IfXlXqCTMpWwp1Ffz4uRln4xrDycgXfIrTk2DY0nebzqUyTbSFLrZUNckUBbxkIOZvqlfWiLRxXmsY85B/LryMH4POLi8RxewwYTd4lwpRquz+BQQbYEJLPbOtthMo+xSu2hfmgVjD8tOKRP1Bh03gbi8bHzfQ9ZTOrLpPIKgjDwCQRDR37Q7qLbJ4i6KlxVwsy2MYMYR3uPaSl7dsG1wHS+Dtc2F0Vt5d/9lTfc9uHnSRBtDG8ZSqi3eRa6f9pv0HtCxg10tqKquVQFt8fq4wRnmrCDcPranHlP++AZ9KU3BRF2Ywlhw6bNfuAUFwKD79lORfvC7j2BHeCUzxT8uKmhhTR4hisoRLvb2f68wmvVXsqHNTeK0X7oMuMS61P+0yXpte9eiAjUCT/6RXfEdRnG6w63qY+E72j5jpannNEzaljRHQILgb5uDXRSM1ljfTynSLXg0WT8t7Ze+2CK5YIImkXiWGq0JsRXNKXkR8Fc9JL6jaIZfFWJBP14V52QlccmKStQ7yOkrHclDmnys46ZRrJKp89VQxF9dTKQ3a078HKHvJvq4kA+ntMrwMOokU=
+
+sudo: required
+services:
+  - docker
+
+dist: xenial
+
+go:
+  - "1.12"
+language: bash
+
+script:
+- ./build.sh
