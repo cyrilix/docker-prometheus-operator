@@ -6,11 +6,9 @@ sudo: required
 services:
   - docker
 
-dist: xenial
-
 go:
-  - "1.12"
-language: golang
+  - "1.12.x"
+language: go
 
 script:
 - ./build.sh
