@@ -10,7 +10,7 @@ dist: xenial
 
 go:
   - "1.12"
-language: bash
+language: golang
 
 script:
 - ./build.sh
