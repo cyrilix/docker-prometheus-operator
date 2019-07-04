@@ -39,13 +39,14 @@ fetch_sources() {
 build_and_push_images() {
     local arch="$1"
     local dockerfile="$2"
+    local img_name="$3"
 
-    docker build --file "${dockerfile}" --tag "${IMG_NAME}:${arch}-latest" .
-    docker tag "${IMG_NAME}:${arch}-latest" "${IMG_NAME}:${arch}-${VERSION}"
-    docker tag "${IMG_NAME}:${arch}-latest" "${IMG_NAME}:${arch}-${MAJOR_VERSION}"
-    docker push "${IMG_NAME}:${arch}-latest"
-    docker push "${IMG_NAME}:${arch}-${VERSION}"
-    docker push "${IMG_NAME}:${arch}-${MAJOR_VERSION}"
+    docker build --file "${dockerfile}" --tag "${img_name}:${arch}-latest" .
+    docker tag "${img_name}:${arch}-latest" "${img_name}:${arch}-${VERSION}"
+    docker tag "${img_name}:${arch}-latest" "${img_name}:${arch}-${MAJOR_VERSION}"
+    docker push "${img_name}:${arch}-latest"
+    docker push "${img_name}:${arch}-${VERSION}"
+    docker push "${img_name}:${arch}-${MAJOR_VERSION}"
 }
 
 
@@ -71,14 +72,14 @@ echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
 rm -f operator
 GOOS=linux GOARCH=amd64 make build prometheus-config-reloader
-build_and_push_images amd64 ./Dockerfile
-build_and_push_images amd64 ./cmd/prometheus-config-reloader/Dockerfile
+build_and_push_images amd64 ./Dockerfile "${IMG_NAME}"
+build_and_push_images amd64 ./cmd/prometheus-config-reloader/Dockerfile "cyrilix/prometheus-config-reloader"
 
 sed "s#FROM \+\(.*\)#FROM arm32v6/busybox\n\nCOPY qemu-arm-static /usr/bin/\n#" Dockerfile > Dockerfile.arm
 rm -f operator
 GOOS=linux GOARCH=arm GOARM=6 make build prometheus-config-reloader
-build_and_push_images arm ./Dockerfile.arm
-build_and_push_images arm ./cmd/prometheus-config-reloader/Dockerfile
+build_and_push_images arm ./Dockerfile.arm "${IMG_NAME}"
+build_and_push_images arm ./cmd/prometheus-config-reloader/Dockerfile "cyrilix/prometheus-config-reloader"
 
 build_manifests "${IMG_NAME}"
 build_manifests "cyrilix/prometheus-config-reloader"
