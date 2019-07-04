@@ -69,12 +69,14 @@ init_qemu
 echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
 rm -f operator
-GOOS=linux GOARCH=amd64 make build
+GOOS=linux GOARCH=amd64 make build prometheus-config-reloader
 build_and_push_images amd64 ./Dockerfile
+build_and_push_images amd64 ./cmd/prometheus-config-reloader/Dockerfile
 
 sed "s#FROM \+\(.*\)#FROM arm32v6/busybox\n\nCOPY qemu-arm-static /usr/bin/\n#" Dockerfile > Dockerfile.arm
 rm -f operator
-GOOS=linux GOARCH=arm GOARM=6 make build
+GOOS=linux GOARCH=arm GOARM=6 make build prometheus-config-reloader
 build_and_push_images arm ./Dockerfile.arm
+build_and_push_images amd64 ./cmd/prometheus-config-reloader/Dockerfile
 
 build_manifests
