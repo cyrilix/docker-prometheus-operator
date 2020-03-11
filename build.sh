@@ -1,8 +1,8 @@
 #! /bin/bash
 
 IMG_NAME=cyrilix/prometheus-operator
-VERSION=0.30.1
-MAJOR_VERSION=0.30
+VERSION=0.37.0
+MAJOR_VERSION=0.37
 export DOCKER_CLI_EXPERIMENTAL=enabled
 export DOCKER_USERNAME=cyrilix
 
