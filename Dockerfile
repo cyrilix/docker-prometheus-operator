@@ -2,7 +2,7 @@ FROM --platform=$BUILDPLATFORM golang:1.13-alpine AS builder
 
 ARG TARGETPLATFORM
 ARG BUILDPLATFORM
-ARG version="v0.34.0"
+ARG version="v0.37.0"
 
 
 WORKDIR /opt
