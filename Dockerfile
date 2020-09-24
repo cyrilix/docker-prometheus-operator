@@ -1,4 +1,4 @@
-FROM --platform=$BUILDPLATFORM golang:1.14-alpine AS builder-src
+FROM --platform=$BUILDPLATFORM golang:1.15-alpine AS builder-src
 
 ARG version="v0.42.1"
 WORKDIR /opt
@@ -16,6 +16,7 @@ ARG BUILDPLATFORM
 RUN GOOS=$(echo $TARGETPLATFORM | cut -f1 -d/) && \
     GOARCH=$(echo $TARGETPLATFORM | cut -f2 -d/) && \
     GOARM=$(echo $TARGETPLATFORM | cut -f3 -d/ | sed "s/v//" ) && \
+    GOARCH=${GOARCH} GOARM=${GOARM} go mod vendor && \
     CGO_ENABLED=0 GOOS=${GOOS} GOARCH=${GOARCH} GOARM=${GOARM} go build -mod=vendor -ldflags="-s -X github.com/coreos/prometheus-operator/pkg/version.Version=${version}" -o operator cmd/operator/main.go
 
 
@@ -26,6 +27,7 @@ ARG BUILDPLATFORM
 RUN GOOS=$(echo $TARGETPLATFORM | cut -f1 -d/) && \
     GOARCH=$(echo $TARGETPLATFORM | cut -f2 -d/) && \
     GOARM=$(echo $TARGETPLATFORM | cut -f3 -d/ | sed "s/v//" ) && \
+    GOARCH=${GOARCH} GOARM=${GOARM} go mod vendor && \
     CGO_ENABLED=0 GOOS=${GOOS} GOARCH=${GOARCH} GOARM=${GOARM} go build -mod=vendor -ldflags="-s -X github.com/coreos/prometheus-operator/pkg/version.Version=${version}" -o prometheus-config-reloader cmd/prometheus-config-reloader/main.go
 
 
