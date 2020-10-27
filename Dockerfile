@@ -1,6 +1,6 @@
 FROM --platform=$BUILDPLATFORM golang:1.15-alpine AS builder-src
 
-ARG version="v0.42.1"
+ARG version="v0.43.0"
 WORKDIR /opt
 
 RUN apk add -U git
